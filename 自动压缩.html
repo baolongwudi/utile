@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      (async () => {
+        const readableStream = await fetch("lorem.txt").then(
+          (response) => response.body
+        );
+        const compressedReadableStream = readableStream.pipeThrough(
+          new CompressionStream("gzip")
+        );
+        const decompressedReadableStream = compressedReadableStream.pipeThrough(
+          new DecompressionStream("gzip")
+        );
+        console.log(decompressedReadableStream)
+      })();
+    </script>
+  </body>
+</html>
